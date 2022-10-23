@@ -1,0 +1,40 @@
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+        google()
+        mavenCentral()
+        maven { url "https://kotlin.bintray.com/kotlinx" }
+        //maven("https://kotlin.bintray.com/kotlinx")
+    }
+    //https://github.com/Kotlin/kotlinx.serialization/issues/91
+//    resolutionStrategy {
+//        eachPlugin {
+//            when (requested.id.id) {
+//                "kotlinx-serialization" {
+//                    useModule("org.jetbrains.kotlinx:kotlinx-gradle-serialization-plugin:${requested.version}")
+//                }
+//            }
+//        }
+//    }
+
+    //https://stackoverflow.com/questions/54752020/kotlin-serialization-unresolved-reference-serializer
+    resolutionStrategy {
+        eachPlugin {
+            if (requested.id.id == "kotlin-multiplatform") {
+                useModule("org.jetbrains.kotlin:kotlin-gradle-plugin:${requested.version}")
+            }
+            if (requested.id.id == "kotlinx-serialization") {
+                useModule("org.jetbrains.kotlin:kotlin-serialization:${requested.version}")
+            }
+        }
+    }
+}
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+rootProject.name = "KtorDemo"
+include ':app'
